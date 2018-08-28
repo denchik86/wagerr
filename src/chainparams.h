@@ -127,6 +127,8 @@ public:
     int Zerocoin_Block_V2_Start() const { return nBlockZerocoinV2; }
     CAmount InvalidAmountFiltered() const { return nInvalidAmountFiltered; };
 
+    int Zerocoin_AccumulationStartHeight() const { return nZerocoinAccumulationStartHeight; }
+
     /** Betting on blockchain **/
     std::string OracleWalletAddr() const { return strOracleWalletAddr; }
     int BetBlocksIndexTimespan() const { return nBetBlocksIndexTimespan; }
@@ -139,6 +141,7 @@ public:
     int BetXPermille() const { return nBetXPermille; }
     int TraverseBlocksAmount() const { return nTraverseBlocksAmount; }
     int BetBlockPayoutAmount() const { return nBetBlockPayoutAmount; }
+    std::string BetRefundTypeID() const { return strBetRefundTypeID; }
     std::string BetResultTypeID() const { return strBetResultTypeID; }
     std::string BetEventID() const { return strBetEventID; }
     int MaxBetPayoutRange() const { return nMaxBetPayoutRange; }
@@ -207,6 +210,8 @@ protected:
     int nBlockEnforceInvalidUTXO;
     int nBlockZerocoinV2;
 
+    int nZerocoinAccumulationStartHeight;
+
     std::string strOracleWalletAddr;
     int nBetBlocksIndexTimespan;
     int nBetStartHeight;
@@ -218,6 +223,7 @@ protected:
     int nBetXPermille;
     int nTraverseBlocksAmount;
     int nBetBlockPayoutAmount;
+    std::string strBetRefundTypeID;
     std::string strBetResultTypeID;
     std::string strBetEventID;
     int nMinBetPayoutRange;

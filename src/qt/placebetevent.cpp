@@ -121,11 +121,20 @@ CEvent* CEvent::ParseEvent(const std::string& descr)
 //     // printf(">!> %s\n", evtDes.c_str());
 //
 
-    std::string winOddsString = std::to_string(std::stod(fields[8]) / Params().OddsDivisor());
-    winOddsString =  winOddsString.substr(0, winOddsString.size() -4);
+    std::string winOddsString;
     std::string loseOddsString;
     std::string drawOddsString;
 
+    // If home odds are set to zero show 'N/A' on the home odds btn. Otherwise show to home odds.
+    if( std::stod(fields[8]) > 0 ){
+        winOddsString = std::to_string(std::stod(fields[8]) / Params().OddsDivisor());
+        winOddsString = winOddsString.substr(0, winOddsString.size() -4);
+    }
+    else{
+        winOddsString = "N/A";
+    }
+
+    // If away odds are set to zero show 'N/A' on the away odds btn. Otherwise show to away odds.
     if( std::stod(fields[9]) > 0 ){
         loseOddsString = std::to_string(std::stod(fields[9]) / Params().OddsDivisor());
         loseOddsString = loseOddsString.substr(0, loseOddsString.size() -4);
@@ -134,6 +143,7 @@ CEvent* CEvent::ParseEvent(const std::string& descr)
         loseOddsString = "N/A";
     }
 
+    // If draw odds are set to zero show 'N/A' on the draw odds btn. Otherwise show to draw odds/
     if( std::stod(fields[10]) > 0 ){
         drawOddsString = std::to_string(std::stod(fields[10]) / Params().OddsDivisor());
         drawOddsString =  drawOddsString.substr(0, drawOddsString.size() -4);
@@ -161,8 +171,8 @@ QWidget* parent, CEvent* event, const std::string& eventDetails, const  std::str
                                                   model(0),
                                                   event(event)
 {
-    LogPrintf("PlaceBetEvent::PlaceBetEvent: about to print\n");
-    LogPrintf("PlaceBetEvent::PlaceBetEvent: %s %s\n", event->id.c_str(), event->homeTeam.c_str());
+    //LogPrintf("PlaceBetEvent::PlaceBetEvent: about to print\n");
+    //LogPrintf("PlaceBetEvent::PlaceBetEvent: %s %s\n", event->id.c_str(), event->homeTeam.c_str());
     ui->setupUi(this);
 
     setCurrentWidget(ui->SendCoins);
@@ -204,22 +214,22 @@ void PlaceBetEvent::on_pasteButton_clicked()
 
 void PlaceBetEvent::on_pushButtonPlaceHomeBet_clicked()
 {
-printf("PlaceBetEvent::on_pushButtonPlaceHomeBet_clicked: about to print\n");
-printf("PlaceBetEvent::on_pushButtonPlaceHomeBet_clicked: %s %s\n", event->id.c_str(), event->homeTeam.c_str());
+//printf("PlaceBetEvent::on_pushButtonPlaceHomeBet_clicked: about to print\n");
+//printf("PlaceBetEvent::on_pushButtonPlaceHomeBet_clicked: %s %s\n", event->id.c_str(), event->homeTeam.c_str());
     emit currentEventChanged(event, event->homeTeam, event->homeOdds);
 }
 
 void PlaceBetEvent::on_pushButtonPlaceAwayBet_clicked()
 {
-printf("PlaceBetEvent::on_pushButtonPlaceAwayBet_clicked: about to print\n");
-printf("PlaceBetEvent::on_pushButtonPlaceAwayBet_clicked: %s %s\n", event->id.c_str(), event->awayTeam.c_str());
+//printf("PlaceBetEvent::on_pushButtonPlaceAwayBet_clicked: about to print\n");
+//printf("PlaceBetEvent::on_pushButtonPlaceAwayBet_clicked: %s %s\n", event->id.c_str(), event->awayTeam.c_str());
     emit currentEventChanged(event, event->awayTeam, event->awayOdds);
 }
 
 void PlaceBetEvent::on_pushButtonPlaceDrawBet_clicked()
 {
-printf("PlaceBetEvent::on_pushButtonPlaceDrawBet_clicked: about to print\n");
-printf("PlaceBetEvent::on_pushButtonPlaceDrawBet_clicked: %s %s\n", event->id.c_str(), event->drawOdds.c_str());
+//printf("PlaceBetEvent::on_pushButtonPlaceDrawBet_clicked: about to print\n");
+//printf("PlaceBetEvent::on_pushButtonPlaceDrawBet_clicked: %s %s\n", event->id.c_str(), event->drawOdds.c_str());
     emit currentEventChanged(event, "DRW", event->drawOdds);
 }
 
